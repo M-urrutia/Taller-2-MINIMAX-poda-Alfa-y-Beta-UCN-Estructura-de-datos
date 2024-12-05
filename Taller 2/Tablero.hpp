@@ -12,4 +12,5 @@ public:
     void borrarDato(int posicion);
     void imprimirTablero();
     bool espacio();
+    bool compararCon(Tablero comparado);
 };

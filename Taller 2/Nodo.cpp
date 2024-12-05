@@ -1,47 +1,106 @@
 #include "Tablero.cpp"
+using namespace std;
+#include <vector>
 
 class Nodo
 {
 private:
-    Nodo** hijos;
-    int numHijos;
-    Tablero asignado;
+    vector<Nodo*> hijos;
+    Tablero* asignado;
+    int valor;
+    int altura;
+    int alfa;
+    int beta;
 
 public:
-    Nodo(Tablero tab){
-        hijos = nullptr;
-        numHijos = 0;;
-        asignado = tab;
+    Nodo(Tablero tab, int Altura, int jugador){
+        hijos = vector<Nodo*>(0);
+        asignado = new Tablero();
+        *asignado = tab;
+        valor = 900*jugador;
+        altura = Altura;
+        alfa = -900;
+        beta = 900;
     };
+
+    vector<Nodo*> getListaHijos(){
+        return hijos;
+    }
 
     Nodo* getHijo(int num){
         return hijos[num];
     }
 
     Tablero getTablero(){
-        return asignado;
+        return *asignado;
     }
 
     int getNumHijos(){
-        return numHijos;
+        return hijos.size();
     }
 
     void agregarHijo(Nodo* nuevoHijo) {
+        hijos.push_back(nuevoHijo);
+    }
 
-        Nodo** nuevoArreglo = new Nodo*[numHijos + 1];
-        
-        for (int i = 0; i < numHijos; ++i) {
-            nuevoArreglo[i] = hijos[i];
+    void setValor(int nuevoValor){
+        valor = nuevoValor;
+    }
+
+    int getValor(){
+        return valor;
+    }
+    
+    void setAltura(int nuevoValor){
+        altura = nuevoValor;
+    }
+
+    int getAltura(){
+        return altura;
+    }
+
+    void BorrarHijo(int i){
+        delete hijos[i];
+        hijos.erase(hijos.begin() + i);
+    }
+
+    void BorrarTodosHijos(){
+        for (Nodo* nodo : hijos) {
+            delete nodo;
         }
-        
-        nuevoArreglo[numHijos] = nuevoHijo;
-        
-        delete[] hijos;
-        hijos = nuevoArreglo;
-        ++numHijos;
+        hijos.clear();
+    }
+
+    void BorrarHijosDesde(int indice){
+        while (hijos.size() != indice){
+            BorrarHijo(hijos.size()-1);
+        }
+    }
+
+    bool compararCon(Nodo* segundo){
+        return this -> getTablero().compararCon(segundo -> getTablero());
+    }
+
+    int getBeta(){
+        return beta;
+    }
+
+    int getAlfa(){
+        return alfa;
+    }
+
+    void setAlfa(int num){
+        alfa = num;
+    }
+
+    void setBeta(int num){
+        beta = num;
     }
 
     ~Nodo() {
-        delete[] hijos;
+        delete asignado;
+        if(hijos.size() != 0){
+            this -> BorrarTodosHijos();
+        }
     }
 };

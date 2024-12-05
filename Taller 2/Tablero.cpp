@@ -41,3 +41,12 @@ bool Tablero::espacio(){
     }
     return false; 
 }
+
+bool Tablero::compararCon(Tablero segundo){
+    for(int i = 0 ; i < 9 ; i++){
+        if(lista[i] != segundo.getDato(i)){
+            return false;
+        }
+    }
+    return true;
+}
