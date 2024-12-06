@@ -1,12 +1,6 @@
-#include "Nodo.cpp"
-#include "Juez.cpp"
-#include <iostream>
-#include <queue>
-#include <stack>
+#include "Pedro.hpp"
 
-using namespace std;
-
-Nodo* crearArbol(Nodo* raiz, int jugadorActual){
+Nodo* Pedro::crearArbol(Nodo* raiz, int jugadorActual){
     int num = jugadorActual;
     
     for(int i = 0 ; i < 9 ; ++i){
@@ -16,7 +10,7 @@ Nodo* crearArbol(Nodo* raiz, int jugadorActual){
 
             Nodo* nuevoHijo = new Nodo(aux, raiz -> getAltura() + 1 , num*-1);
             
-            if (verificar(&aux, i, num)) {
+            if (Juez::verificar(&aux, i, num)) {
                 nuevoHijo -> setValor(num * (10 - nuevoHijo -> getAltura()));
                 if(nuevoHijo -> getValor() < 0 ){
                     nuevoHijo -> setMensaje("El ganador es el jugador -1");
@@ -39,7 +33,7 @@ Nodo* crearArbol(Nodo* raiz, int jugadorActual){
     return raiz;
 }
 
-void establecerMiniMax(Nodo* raiz) {
+void  Pedro::establecerMiniMax(Nodo* raiz) {
     for (Nodo* hijo : raiz -> getListaHijos()) {
         hijo -> setAlfa(raiz -> getAlfa());
         hijo -> setBeta(raiz -> getBeta());
@@ -49,10 +43,10 @@ void establecerMiniMax(Nodo* raiz) {
         }
 
         if (raiz -> getEstado()) {
-            raiz -> setAlfa(max(raiz -> getAlfa(), hijo -> getValor()));
+            raiz -> setAlfa(std::max(raiz -> getAlfa(), hijo -> getValor()));
             raiz -> setValor(raiz -> getAlfa());
         } else {
-            raiz -> setBeta(min(raiz -> getBeta(), hijo -> getValor()));
+            raiz -> setBeta(std::min(raiz -> getBeta(), hijo -> getValor()));
             raiz -> setValor(raiz -> getBeta());
         }
 
@@ -62,7 +56,7 @@ void establecerMiniMax(Nodo* raiz) {
     }
 }
 
-Nodo* TurnoPedro(Nodo* situacionActual){
+Nodo* Pedro::TurnoPedro(Nodo* situacionActual){
     situacionActual -> setAlfa(-900);
     situacionActual -> setBeta(900);
     establecerMiniMax(situacionActual);

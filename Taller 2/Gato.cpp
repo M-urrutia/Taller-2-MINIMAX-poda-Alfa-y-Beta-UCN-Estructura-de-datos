@@ -1,8 +1,9 @@
+#pragma once
 #include <iostream>
-using namespace std;
-#include "Pedro.cpp"
+#include "Pedro.hpp"
 #include "windows.h"
 #include <ctime>
+using namespace std;
 
 Nodo* TurnoHumano(Nodo* situacionActual, int jugador){
     Tablero aux = situacionActual -> getTablero();
@@ -35,7 +36,7 @@ Nodo* Jugar(int turnoActual,int jugadorHumano, int Pedro, Nodo* situacionActual)
         return TurnoHumano(situacionActual, jugadorHumano);
     } else {
         turnoActual = jugadorHumano;
-        return TurnoPedro(situacionActual);
+        return Pedro::TurnoPedro(situacionActual);
     }
 }
 
@@ -47,10 +48,10 @@ Nodo* JugarIAS(int turnoActual, int Pedro1, int Pedro2, Nodo* situacionActual){
     if (turnoActual == Pedro1)
     {
         turnoActual = Pedro2;
-        return TurnoPedro(situacionActual);
+        return Pedro::TurnoPedro(situacionActual);
     } else {
         turnoActual = Pedro1;
-        return TurnoPedro(situacionActual);
+        return Pedro::TurnoPedro(situacionActual);
     }
 }
 
@@ -61,7 +62,7 @@ int main() {
     t0 = clock();
     // Code to execute
     t1 = clock();
-    raiz = crearArbol(raiz, 1);
+    raiz = Pedro::crearArbol(raiz, 1);
 
     double time = (double(t1-t0)/CLOCKS_PER_SEC);
     cout << "Execution Time: " << time << endl;
