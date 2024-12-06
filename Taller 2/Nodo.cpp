@@ -11,6 +11,8 @@ private:
     int altura;
     int alfa;
     int beta;
+    bool Estado;
+    string Mensaje;
 
 public:
     Nodo(Tablero tab, int Altura, int jugador){
@@ -21,6 +23,9 @@ public:
         altura = Altura;
         alfa = -900;
         beta = 900;
+        if(valor > 0){
+            Estado = true;
+        }
     };
 
     vector<Nodo*> getListaHijos(){
@@ -95,6 +100,22 @@ public:
 
     void setBeta(int num){
         beta = num;
+    }
+
+    bool getEstado(){
+        return Estado;
+    }
+
+    void setEstado(bool nuevoEstado){
+        Estado = nuevoEstado;
+    }
+
+    string getMensaje(){
+        return Mensaje;
+    }
+
+    void setMensaje(string nuevoMensaje){
+        Mensaje = nuevoMensaje;
     }
 
     ~Nodo() {

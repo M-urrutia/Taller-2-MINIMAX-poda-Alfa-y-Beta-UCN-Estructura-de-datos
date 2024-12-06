@@ -50,3 +50,15 @@ bool Tablero::compararCon(Tablero segundo){
     }
     return true;
 }
+
+bool Tablero::tableroLleno(){
+    for (int i = 0; i < 9; i++)
+    {
+        if (lista[i] == 0)
+        {
+            return false;
+        }
+        
+    }
+    return true;
+}

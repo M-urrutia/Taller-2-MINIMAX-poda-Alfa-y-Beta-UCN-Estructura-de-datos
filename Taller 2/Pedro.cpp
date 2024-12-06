@@ -6,14 +6,8 @@
 
 using namespace std;
 
-void imprimirHijos(Nodo* raiz){
-    for(int i = 0 ; i < raiz -> getNumHijos() ; i++){
-        raiz -> getHijo(i) -> getTablero().imprimirTablero();
-    }
-}
-
-Nodo* crearHijos(Nodo* raiz, int jugadorActual){
-    int num = jugadorActual * -1;
+Nodo* crearArbol(Nodo* raiz, int jugadorActual){
+    int num = jugadorActual;
     
     for(int i = 0 ; i < 9 ; ++i){
         if(raiz -> getTablero().getDato(i) == 0){
@@ -22,87 +16,62 @@ Nodo* crearHijos(Nodo* raiz, int jugadorActual){
 
             Nodo* nuevoHijo = new Nodo(aux, raiz -> getAltura() + 1 , num*-1);
             
-            if (verificar(&aux, i, num)){
+            if (verificar(&aux, i, num)) {
                 nuevoHijo -> setValor(num * (10 - nuevoHijo -> getAltura()));
-                raiz -> agregarHijo(nuevoHijo);
-            }else{
-                raiz -> agregarHijo(crearHijos(nuevoHijo,num));
+                if(nuevoHijo -> getValor() < 0 ){
+                    nuevoHijo -> setMensaje("El ganador es el jugador -1");
+                } else {
+                    nuevoHijo -> setMensaje("El ganador es el jugador 1");
                 }
+                raiz -> agregarHijo(nuevoHijo);
+                
+            } else if(aux.tableroLleno()){
+                nuevoHijo -> setValor(0);
+                nuevoHijo -> setMensaje("Esto es un empate!");
+                raiz -> agregarHijo(nuevoHijo);
+            } else {
+                raiz -> agregarHijo(crearArbol(nuevoHijo, num*-1));
+            }
+            
             aux.borrarDato(i);
         }
     }
     return raiz;
 }
 
-Nodo* establecerMiniMax(Nodo* raiz, bool MAX){
-    for(Nodo* hijo : raiz -> getListaHijos()){
+void establecerMiniMax(Nodo* raiz) {
+    for (Nodo* hijo : raiz -> getListaHijos()) {
         hijo -> setAlfa(raiz -> getAlfa());
         hijo -> setBeta(raiz -> getBeta());
 
-        if(MAX){
-            return raiz;
+        if (hijo -> getNumHijos() != 0) {
+            establecerMiniMax(hijo);
         }
-    }
-    return raiz;
-}
 
-int contarArbol(Nodo* raiz){
-    int contador = 0;
-    queue<Nodo*> cola;
-    cola.push(raiz);
-
-    while (!cola.empty()){
-        Nodo* actual = cola.front();
-        cola.pop();
-        contador++;
-        for (int i = 0 ; i < actual-> getNumHijos() ; ++i){
-            cola.push(actual -> getHijo(i));
+        if (raiz -> getEstado()) {
+            raiz -> setAlfa(max(raiz -> getAlfa(), hijo -> getValor()));
+            raiz -> setValor(raiz -> getAlfa());
+        } else {
+            raiz -> setBeta(min(raiz -> getBeta(), hijo -> getValor()));
+            raiz -> setValor(raiz -> getBeta());
         }
-    }   
-    return contador;
-}
 
-void encontrarGanador(Nodo* raiz){
-    Nodo* actual = raiz;
-    queue<Nodo*> cola;
-    cola.push(actual);
-
-    while (!cola.empty()){
-        actual = cola.front();
-        cola.pop();
-
-        if (actual -> getValor() != 0){
-            cout << actual -> getValor() << endl;
-            actual -> getTablero().imprimirTablero();
+        if (raiz -> getAlfa() >= raiz -> getBeta()) {
             break;
         }
+    }
+}
 
-        for (int i = 0 ; i < actual-> getNumHijos() ; ++i){
-            cola.push(actual -> getHijo(i));
+Nodo* TurnoPedro(Nodo* situacionActual){
+    situacionActual -> setAlfa(-900);
+    situacionActual -> setBeta(900);
+    establecerMiniMax(situacionActual);
+    for(Nodo* hijo : situacionActual -> getListaHijos()){
+        if(situacionActual -> getValor() == hijo -> getValor()){
+            situacionActual = hijo;
+            break;
         }
     }
-
-    actual -> getTablero().imprimirTablero();
-    cout << actual -> getValor() << endl;
+    return situacionActual;
 }
 
-void DFS(Nodo*raiz){
-    cout<< raiz -> getValor() << endl;
-    raiz -> getTablero().imprimirTablero();
-    
-    if(raiz -> getNumHijos() == 0){
-        return;
-    } 
-    DFS(raiz -> getHijo(0));
-}
-
-int main()
-{
-    Tablero* tab = new Tablero();
-    Nodo* raiz = new Nodo(*tab, 0, -1);
-    
-    raiz = crearHijos(raiz, 1);
-    DFS(raiz);
-
-    return 0;
-}

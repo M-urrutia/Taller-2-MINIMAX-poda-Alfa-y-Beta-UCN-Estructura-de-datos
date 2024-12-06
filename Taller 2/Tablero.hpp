@@ -13,4 +13,5 @@ public:
     void imprimirTablero();
     bool espacio();
     bool compararCon(Tablero comparado);
+    bool tableroLleno();
 };

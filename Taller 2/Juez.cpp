@@ -94,17 +94,3 @@ bool verificar(Tablero* tablero, int posicion, int jugador){
     }
 }
 
-bool Jugada(Tablero* tablero, int jugador){
-    int posicion;
-    bool lel;
-    do
-    {
-        cout << "ingrese la posición en la que desea jugar" << endl;
-        cin >> posicion;
-        lel = tablero->getDato(posicion) != 0;
-    } while (posicion < 0 || posicion > 8 || lel != 0);
-    
-    tablero -> setDato(jugador, posicion);
-    tablero -> imprimirTablero();
-    return verificar(tablero, posicion, jugador);
-}
