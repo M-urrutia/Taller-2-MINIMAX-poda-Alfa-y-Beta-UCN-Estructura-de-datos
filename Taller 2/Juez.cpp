@@ -1,7 +1,6 @@
-#include <iostream>
-using namespace std;
+#include "Juez.hpp" 
 
-bool esquina1(Tablero* tablero, int posicion, int jugador, int direccion){
+bool Juez::esquina1(Tablero* tablero, int posicion, int jugador, int direccion){
     int dato1, dato2;
     int importante[] = {1,4,3};
 
@@ -16,7 +15,7 @@ bool esquina1(Tablero* tablero, int posicion, int jugador, int direccion){
     return false;
 }
 
-bool esquina2(Tablero* tablero, int posicion, int jugador, int direccion){
+bool Juez::esquina2(Tablero* tablero, int posicion, int jugador, int direccion){
     int dato1, dato2;
     int importante[] = {-1,2,3};
 
@@ -31,7 +30,7 @@ bool esquina2(Tablero* tablero, int posicion, int jugador, int direccion){
     return false;
 }
 
-bool bordeFila(Tablero* tablero, int posicion, int jugador, int direccion){
+bool Juez::bordeFila(Tablero* tablero, int posicion, int jugador, int direccion){
     int dato1, dato2;
     
     dato1 = tablero -> getDato(posicion-1);
@@ -48,7 +47,7 @@ bool bordeFila(Tablero* tablero, int posicion, int jugador, int direccion){
     return false;
 }
 
-bool bordeColumna(Tablero* tablero, int posicion, int jugador, int direccion){
+bool Juez::bordeColumna(Tablero* tablero, int posicion, int jugador, int direccion){
     int dato1, dato2;
     
     dato1 = tablero -> getDato(posicion-3);
@@ -65,7 +64,7 @@ bool bordeColumna(Tablero* tablero, int posicion, int jugador, int direccion){
     return false;
 }
 
-bool centro(Tablero* tablero, int posicion, int jugador){
+bool Juez::centro(Tablero* tablero, int posicion, int jugador){
     int dato1, dato2;
     
     for (int i = 1; i < 5; i++)
@@ -79,7 +78,7 @@ bool centro(Tablero* tablero, int posicion, int jugador){
     return false;
 }
 
-bool verificar(Tablero* tablero, int posicion, int jugador){
+bool Juez::verificar(Tablero* tablero, int posicion, int jugador){
     switch(posicion){
         case 0: return esquina1(tablero, posicion, jugador, 1); break;
         case 1: return bordeFila(tablero, posicion, jugador, 1); break;
