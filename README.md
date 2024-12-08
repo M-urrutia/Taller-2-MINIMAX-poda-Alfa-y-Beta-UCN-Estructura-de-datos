@@ -39,15 +39,23 @@ Este proyecto implementa el algoritmo **Minimax** con optimización mediante **p
 ## Ejemplo del Árbol de Juego
 Diagrama de un árbol de juego para las primeras 3 jugadas:
 ```yaml
-                                [Tablero Inicial]
-                                     /   \
-                                    /     \
-                           Movimiento X   Movimiento O
-                               (Max)           (Max)
+                                        0  |  0  |  0
+                                        0  |  0  |  0
+                                        0  |  0  |  0
+                                     Turno de Min (Humano)
+                              -------------------------------
+                              |                              |
+
+                       X  |  0  |  0                    0  |  X  |  0
+                       0  |  0  |  0                    0  |  0  |  0
+                       0  |  0  |  0                    0  |  0  |  0
+                                  Turno de Max (Pedro/IA)
+         -----------------------------|
                                /   \           /   \
                               /     \         /     \
-                 Tablero 1          Tablero 2        Tablero 3
-                 Evaluación: 5      Evaluación: -2   Evaluación: 6
+                 X  |  O  |  0          Tablero 2        Tablero 3
+                 0  |  0  |  0      Evaluación: -2   Evaluación: 6
+                 0  |  0  |  0
                     |                   |               |
            ----------------      ----------------   ----------------
           |         |      \    |         |       |        |      \
