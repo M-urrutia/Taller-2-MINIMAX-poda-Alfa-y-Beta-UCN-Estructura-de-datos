@@ -12,10 +12,10 @@ private:
     int alfa; //Para el uso de poda alfa en MiniMax
     int beta; //Para el uso de poda beta en MiniMax
     bool Estado; // true si es que este nodo es Max, false si el nodo es Min
-    std::string Mensaje; //Un mensaje para imprimir en consola si es que gana uno de los jugadores o un empate
+    int movimiento;
 
 public:
-    Nodo(Tablero tab, int Altura, int jugador); //Constructor con un tablero, la altura del nodo y un "jugador" [-1 o 1] que sirve para asignar un valor base
+    Nodo(Tablero tab, int Altura, int jugador, int Movimiento); //Constructor con un tablero, la altura del nodo y un "jugador" [-1 o 1] que sirve para asignar un valor base
     std::vector<Nodo*> getListaHijos(); //devuelve la lista de hijos
     Nodo* getHijo(int num); //Devuelve un Nodo hijo en especifico, requiere del indice de dicho nodo en la lista de hijos
     Tablero getTablero(); //Devuelve el tablero asignado a este nodo.
@@ -32,7 +32,8 @@ public:
     void setBeta(int num); //Cambia el valor beta por uno nuevo.
     bool getEstado(); //Devuelve el estado del Nodo.
     void setEstado(bool nuevoEstado); //Cambia el estado de este nodo por uno nuevo.
-    std::string getMensaje(); //Devuelve el mensaje de este nodo.
-    void setMensaje(std::string nuevoMensaje); //Cambia el mensaje de este nodo por uno nuevo.
+    int getMovimiento();
+    void BuscarMin();
+    void BuscarMax();
     ~Nodo(); //Destructor del Nodo, al destruirse, destruye todas las ramas que salgan a partir de este Nodo de manera recursiva.
 };

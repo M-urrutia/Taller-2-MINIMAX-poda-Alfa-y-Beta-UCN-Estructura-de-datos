@@ -1,19 +1,22 @@
 #include "Nodo.hpp"
 
-    Nodo::Nodo(Tablero tab, int Altura, int jugador){
+    Nodo::Nodo(Tablero tab, int Altura, int jugador, int Movimiento){
         hijos = std::vector<Nodo*>(0);
         asignado = new Tablero();
         *asignado = tab;
-        valor = 900*jugador;
+        valor = 1000*jugador;
         altura = Altura;
         alfa = -900;
         beta = 900;
-        if(valor > 0){
+        movimiento = Movimiento;
+        if(jugador > 0){
             Estado = true;
         }
     };
 
     std::vector<Nodo*> Nodo::getListaHijos(){return hijos;}
+
+    int Nodo::getMovimiento(){return movimiento;}
 
     Nodo* Nodo::getHijo(int num){return hijos[num];}
 
@@ -45,10 +48,8 @@
 
     void Nodo::setEstado(bool nuevoEstado){Estado = nuevoEstado;}
 
-    std::string Nodo::getMensaje(){return Mensaje;}
-
-    void Nodo::setMensaje(std::string nuevoMensaje){Mensaje = nuevoMensaje;}
-
+ 
+    
     Nodo::~Nodo() {
         delete asignado;
         if(hijos.size() != 0){

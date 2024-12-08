@@ -1,8 +1,6 @@
 #pragma once
 #include <iostream>
 #include "Pedro.hpp"
-#include "windows.h"
-#include <ctime>
 using namespace std;
 
 Nodo* TurnoHumano(Nodo* situacionActual, int jugador){
@@ -55,27 +53,85 @@ Nodo* JugarIAS(int turnoActual, int Pedro1, int Pedro2, Nodo* situacionActual){
     }
 }
 
+Nodo* JugarHumanos(int turnoActual, int humano1, int humano2, Nodo* situacionActual){
+    cout << "turno del jugador " << turnoActual << endl;
+    situacionActual -> getTablero().imprimirTablero();
+    
+
+    if (turnoActual == humano1)
+    {
+        turnoActual = humano2;
+        return TurnoHumano(situacionActual, turnoActual);
+    } else {
+        turnoActual = humano1;
+        return TurnoHumano(situacionActual, turnoActual);
+    }
+}
+
+int Menu(){
+    cout << "Ingrese la opcion que desee:" << endl;
+    cout << "1) Humano v/s IA" << endl;
+    cout << "2) IA v/s IA" << endl;
+    cout << "3) Humano v/s Humano" << endl;
+    cout << "4) Terminar Programa" << endl;
+    int decision;
+    cin >> decision;
+
+    while(decision < 1 || decision > 4){
+        cout << "opcion no valida, intente otra vez" << endl;
+        cin >> decision;
+    }
+
+    return decision;
+}
+
+
 int main() {
     Tablero* inicial = new Tablero();
-    Nodo* raiz = new Nodo(*inicial, 1 , 1);
-    unsigned t0, t1;
-    t0 = clock();
-    // Code to execute
-    t1 = clock();
-    raiz = Pedro::crearArbol(raiz, 1);
-
-    double time = (double(t1-t0)/CLOCKS_PER_SEC);
-    cout << "Execution Time: " << time << endl;
-
+    Nodo* raiz = new Nodo(*inicial, 1 , -1, -1);
+    vector<int> posibles = {0,1,2,3,4,5,6,7,8};
+    raiz = Pedro::crearArbol(raiz, -1, posibles);
     Nodo* actual = raiz;
-    int turnoInicial = 1;
-    while (actual -> getNumHijos() != 0)
+    
+    int utilidad = Menu();
+    
+    while (utilidad != 4)
     {
-        actual = Jugar(turnoInicial , 1 , -1 , actual);
-        turnoInicial = turnoInicial * -1;
+        // menu.
+        int turnoInicial = -1;
+        switch (utilidad){
+            case 1: while (actual -> getNumHijos() != 0)
+            {
+                // juego de Humano contra IA 
+                actual = Jugar(turnoInicial, -1, 1, actual);
+                turnoInicial = turnoInicial*-1;
+            } break;
+            
+
+            case 2: while (actual -> getNumHijos() != 0)
+            {
+                // juego de IA contra IA
+                actual = JugarIAS(turnoInicial, 1, -1, actual);
+                turnoInicial = turnoInicial*-1;
+            } break;
+            
+
+            case 3: while (actual -> getNumHijos() != 0)
+            {
+                // juego de Humano contra Humano
+                actual = JugarHumanos(turnoInicial, -1, 1, actual);
+                turnoInicial = turnoInicial*-1;
+            } break;
+            
+
+            default: break; 
+        }
+        actual -> getTablero().imprimirTablero();
+        cout << "HA GANADO EL JUGADOR: " << actual -> getTablero().Ganador() << endl;
+        actual = raiz;
+        utilidad = Menu();
     }
-    actual -> getTablero().imprimirTablero();
-    cout << actual -> getMensaje() << endl;
+    
 
     delete inicial;
     delete raiz;
