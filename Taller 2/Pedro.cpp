@@ -1,34 +1,27 @@
 #include "Pedro.hpp"
 
-Nodo* Pedro::crearArbol(Nodo* raiz, int jugadorActual){
+Nodo* Pedro::crearArbol(Nodo* raiz, int jugadorActual, std::vector<int> movimientosPosibles){
     int num = jugadorActual;
-    
-    for(int i = 0 ; i < 9 ; ++i){
-        if(raiz -> getTablero().getDato(i) == 0){
-            Tablero aux = raiz -> getTablero();
-            aux.setDato(num , i);
+    int cont = 0;
+    for(int i: movimientosPosibles){
+        Tablero aux = raiz -> getTablero();
+        aux.setDato(num , i);
 
-            Nodo* nuevoHijo = new Nodo(aux, raiz -> getAltura() + 1 , num*-1, i);
+        Nodo* nuevoHijo = new Nodo(aux, raiz -> getAltura() + 1 , num*-1, i);
             
-            if (aux.Ganador() != 0) {
-                nuevoHijo -> setValor(num * (10 - nuevoHijo -> getAltura()));
-                if(nuevoHijo -> getValor() < 0 ){
-                    nuevoHijo -> setMensaje("El ganador es el jugador -1");
-                } else {
-                    nuevoHijo -> setMensaje("El ganador es el jugador 1");
-                }
-                raiz -> agregarHijo(nuevoHijo);
-                
-            } else if(aux.tableroLleno()){
-                nuevoHijo -> setValor(0);
-                nuevoHijo -> setMensaje("Esto es un empate!");
-                raiz -> agregarHijo(nuevoHijo);
-            } else {
-                raiz -> agregarHijo(crearArbol(nuevoHijo, num*-1));
-            }
+        if (aux.Ganador() != 0) {
+            nuevoHijo -> setValor(num * (10 - nuevoHijo -> getAltura()));
+            raiz -> agregarHijo(nuevoHijo);
             
-            aux.borrarDato(i);
+        } else if(aux.tableroLleno()){
+            nuevoHijo -> setValor(0);
+            raiz -> agregarHijo(nuevoHijo);
+        } else {
+            std::vector<int> copia = movimientosPosibles;
+            copia.erase(copia.begin() + cont);
+            raiz -> agregarHijo(crearArbol(nuevoHijo, num*-1, copia));
         }
+        cont++;
     }
     return raiz;
 }

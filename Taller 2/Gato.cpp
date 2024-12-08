@@ -91,8 +91,8 @@ int Menu(){
 int main() {
     Tablero* inicial = new Tablero();
     Nodo* raiz = new Nodo(*inicial, 1 , 1, -1);
-
-    raiz = Pedro::crearArbol(raiz, 1);
+    vector<int> posibles = {0,1,2,3,4,6,7,8};
+    raiz = Pedro::crearArbol(raiz, 1, posibles);
     Nodo* actual = raiz;
     
     int utilidad = Menu();
@@ -125,7 +125,6 @@ int main() {
             default: break; 
         }
         actual -> getTablero().imprimirTablero();
-        cout << actual -> getMensaje() << endl;
         actual = raiz;
         utilidad = Menu();
     }

@@ -3,7 +3,6 @@
 Tablero::Tablero() {
         for (int i = 0; i < 9; i++)
         {
-            Tablero::listaVisual[i] = "0";
             lista[i] = 0;
         }
         combinacionesGanadoras = {
@@ -20,12 +19,7 @@ Tablero::Tablero() {
 
 void Tablero::setDato(int nuevo, int posicion) {
         Tablero::lista[posicion] = nuevo;
-        if(nuevo > 0){
-            Tablero::listaVisual[posicion] = "O";
-        }
-        else if(nuevo < 0){
-            Tablero::listaVisual[posicion] = "X";
-        }
+        
     }
 
 int Tablero::getDato(int posicion) {
@@ -34,13 +28,12 @@ int Tablero::getDato(int posicion) {
 
 void Tablero::borrarDato(int posicion){
         Tablero::lista[posicion] = 0;
-        Tablero::listaVisual[posicion] = "0";
 }
 
 void Tablero::imprimirTablero() {
         for (int f = 0; f < 3; f++) {
             for (int c = 0; c < 3; c++) {
-                std::cout << Tablero::listaVisual[f*3 + c] << " "; 
+                std::cout << Tablero::lista[f*3 + c] << " "; 
             }
             std::cout << std::endl;
         }

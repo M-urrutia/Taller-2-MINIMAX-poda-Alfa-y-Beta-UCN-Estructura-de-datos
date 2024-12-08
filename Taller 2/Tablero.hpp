@@ -8,7 +8,6 @@ private:
     //Las posiciones en el tablero 3x3 van del 0 al 8, 
      std::vector<std::vector<int>> combinacionesGanadoras;
      int lista[9]; //Una lista de datos que representa el tablero de 3x3, 0 si el espacio esta libre, 1 o -1 dependiendo de que jugador haya usado ese espacio
-     std::string listaVisual[9]; //La misma lista pero de manera visual, 0 si el espacio esta vacio, X para el jugador -1 y O para el jugador 1
 
 public:
     Tablero(); //Constructor del Tablero, inicia dejando ambas listas con todos sus elementos como 0 o "0"

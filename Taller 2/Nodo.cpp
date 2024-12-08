@@ -47,11 +47,7 @@
     bool Nodo::getEstado(){return Estado;}
 
     void Nodo::setEstado(bool nuevoEstado){Estado = nuevoEstado;}
-
-    std::string Nodo::getMensaje(){return Mensaje;}
-
-    void Nodo::setMensaje(std::string nuevoMensaje){Mensaje = nuevoMensaje;}
-
+    
     Nodo::~Nodo() {
         delete asignado;
         if(hijos.size() != 0){
