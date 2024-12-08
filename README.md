@@ -24,7 +24,7 @@ Este proyecto implementa el algoritmo **Minimax** con optimización mediante **p
 
 2. **Linea de compilacion**
    ```bash
-    g++ -g -o main .\Tablero.cpp .\Juez.cpp .\Nodo.cpp .\Pedro.cpp .\Gato.cpp
+    g++ -g -o main .\Tablero.cpp .\Nodo.cpp .\Pedro.cpp .\Gato.cpp
    ```
 3. **Ejecute el programa**
     ```
