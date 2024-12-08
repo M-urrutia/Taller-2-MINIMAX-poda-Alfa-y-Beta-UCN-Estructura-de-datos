@@ -1,8 +1,6 @@
 #pragma once
 #include <iostream>
 #include "Pedro.hpp"
-#include "windows.h"
-#include <ctime>
 using namespace std;
 
 Nodo* TurnoHumano(Nodo* situacionActual, int jugador){
@@ -63,10 +61,10 @@ Nodo* JugarHumanos(int turnoActual, int humano1, int humano2, Nodo* situacionAct
     if (turnoActual == humano1)
     {
         turnoActual = humano2;
-        return Pedro::TurnoPedro(situacionActual);
+        return TurnoHumano(situacionActual, turnoActual);
     } else {
         turnoActual = humano1;
-        return Pedro::TurnoPedro(situacionActual);
+        return TurnoHumano(situacionActual, turnoActual);
     }
 }
 
@@ -90,26 +88,29 @@ int Menu(){
 
 int main() {
     Tablero* inicial = new Tablero();
-    Nodo* raiz = new Nodo(*inicial, 1 , 1, -1);
-    vector<int> posibles = {0,1,2,3,4,6,7,8};
-    raiz = Pedro::crearArbol(raiz, 1, posibles);
+    Nodo* raiz = new Nodo(*inicial, 1 , -1, -1);
+    vector<int> posibles = {0,1,2,3,4,5,6,7,8};
+    raiz = Pedro::crearArbol(raiz, -1, posibles);
     Nodo* actual = raiz;
     
     int utilidad = Menu();
-
+    
     while (utilidad != 4)
     {
-        int turnoInicial = 1;
+        // menu.
+        int turnoInicial = -1;
         switch (utilidad){
             case 1: while (actual -> getNumHijos() != 0)
             {
-                actual = Jugar(turnoInicial, 1, -1, actual);
+                // juego de Humano contra IA 
+                actual = Jugar(turnoInicial, -1, 1, actual);
                 turnoInicial = turnoInicial*-1;
             } break;
             
 
             case 2: while (actual -> getNumHijos() != 0)
             {
+                // juego de IA contra IA
                 actual = JugarIAS(turnoInicial, 1, -1, actual);
                 turnoInicial = turnoInicial*-1;
             } break;
@@ -117,7 +118,8 @@ int main() {
 
             case 3: while (actual -> getNumHijos() != 0)
             {
-                actual = JugarHumanos(turnoInicial, 1, -1, actual);
+                // juego de Humano contra Humano
+                actual = JugarHumanos(turnoInicial, -1, 1, actual);
                 turnoInicial = turnoInicial*-1;
             } break;
             
@@ -125,6 +127,7 @@ int main() {
             default: break; 
         }
         actual -> getTablero().imprimirTablero();
+        cout << "HA GANADO EL JUGADOR: " << actual -> getTablero().Ganador() << endl;
         actual = raiz;
         utilidad = Menu();
     }

@@ -2,11 +2,12 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
  class Tablero
 {
 private:
     //Las posiciones en el tablero 3x3 van del 0 al 8, 
-     std::vector<std::vector<int>> combinacionesGanadoras;
+     std::vector<std::vector<int>> combinacionesGanadoras; //Vector de vectores que contiene las combinaciones de 3 posiciones que dan una victoria
      int lista[9]; //Una lista de datos que representa el tablero de 3x3, 0 si el espacio esta libre, 1 o -1 dependiendo de que jugador haya usado ese espacio
 
 public:
@@ -17,5 +18,5 @@ public:
      void imprimirTablero(); //Imprime el tablero 
      bool compararCon(Tablero comparado); //Compara este tablero con un segundo tablero dato por dato en la lista principal, al encontrar un dato que sea distinto retorna falso ya que no son iguales, de lo contrario se asume que ambos son iguales y se retorna verdadero
      bool tableroLleno(); //Revisa si el tablero tiene todos los espacios ocupados, si es asi, retorna verdadero, de lo contrario retorna falso.
-     int Ganador();
+     int Ganador(); //Verifica si es que hay un ganador en el tablero, retornarndo 1 si el ganador es Max, -1 si es Min, o 0 si es que hay empate o no hay un ganador definido.
 };

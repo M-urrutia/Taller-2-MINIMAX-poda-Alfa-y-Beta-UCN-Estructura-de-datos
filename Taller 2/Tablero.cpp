@@ -6,6 +6,7 @@ Tablero::Tablero() {
             lista[i] = 0;
         }
         combinacionesGanadoras = {
+            // que es esto ??
             {0,4,8},
             {6,4,2},
             {0,1,2},
@@ -31,9 +32,14 @@ void Tablero::borrarDato(int posicion){
 }
 
 void Tablero::imprimirTablero() {
+
+        int tablero[9];
+        std::copy(Tablero::lista, Tablero::lista + 9, tablero);
         for (int f = 0; f < 3; f++) {
             for (int c = 0; c < 3; c++) {
-                std::cout << Tablero::lista[f*3 + c] << " "; 
+                if(tablero[f*3 + c] == 1) std::cout << "O" << " ";
+                if(tablero[f*3 + c] == -1)std::cout << "X" << " ";
+                if(tablero[f*3 + c] == 0)std::cout << "0" << " ";
             }
             std::cout << std::endl;
         }

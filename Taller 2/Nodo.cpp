@@ -4,12 +4,12 @@
         hijos = std::vector<Nodo*>(0);
         asignado = new Tablero();
         *asignado = tab;
-        valor = 900*jugador;
+        valor = 1000*jugador;
         altura = Altura;
         alfa = -900;
         beta = 900;
         movimiento = Movimiento;
-        if(valor > 0){
+        if(jugador > 0){
             Estado = true;
         }
     };
@@ -47,6 +47,8 @@
     bool Nodo::getEstado(){return Estado;}
 
     void Nodo::setEstado(bool nuevoEstado){Estado = nuevoEstado;}
+
+ 
     
     Nodo::~Nodo() {
         delete asignado;

@@ -33,5 +33,7 @@ public:
     bool getEstado(); //Devuelve el estado del Nodo.
     void setEstado(bool nuevoEstado); //Cambia el estado de este nodo por uno nuevo.
     int getMovimiento();
+    void BuscarMin();
+    void BuscarMax();
     ~Nodo(); //Destructor del Nodo, al destruirse, destruye todas las ramas que salgan a partir de este Nodo de manera recursiva.
 };

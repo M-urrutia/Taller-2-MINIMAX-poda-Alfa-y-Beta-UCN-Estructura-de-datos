@@ -70,6 +70,6 @@ Nota: Para representar un árbol completo, este se expandiría en más niveles h
 ## Complejidad Temporal
 Implementación:
 - Complejidad Temporal Minimax (sin poda)	O(b^d)
-- Minimax con poda alfa-beta cuando los nodos estan ordenados (de menor a mayor o viceversa) O(b^(d/2))
+- Minimax con poda alfa-beta	O(b^(d/2))
 - b: Número de ramas posibles por nodo.
 - d: Profundidad del árbol.
